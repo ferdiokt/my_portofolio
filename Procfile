@@ -1,0 +1,1 @@
+web: gunicorn pyserver_deploy:app
