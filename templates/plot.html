@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<!--
+	Read Only by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+  <head>
+    <title>Ferdian Oktavianto Portfolio Page</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    <link rel="stylesheet" href="{{url_for('static', filename= 'assets/css/main.css')}}" />
+    <script type="text/javascript" 
+    src={{src_js | safe}} 
+    integrity="sha384-HjagQp6T0/7bxYTAXbLotF1MLAGWmhkY5siA1Gc/pcEgvgRPtMsRn0gQtMwGKiw1" 
+    crossorigin="anonymous"></script>
+  </head>
+  <body class="is-preload">
+    <!-- Header -->
+    <section id="header">
+      <header>
+        <span class="image avatar"
+          ><img src="{{url_for('static', filename= 'images/avatar.jpg')}}" alt=""
+        /></span>
+        <h1 id="logo"><a href="#">Ferdian Oktavianto</a></h1>
+        <p>
+          Python developer<br />
+          Sometimes i play with data.
+        </p>
+      </header>
+      <nav id="nav">
+        <ul>
+          <li><a href="./#one">About Me</a></li>
+          <li><a href="./#two">Things I Can Do</a></li>
+          <li><a href="./#three" class="active">My Work</a></li>
+          <li><a href="./#four">Contact</a></li>
+        </ul>
+      </nav>
+      <footer>
+        <ul class="icons">
+          <li>
+            <a
+              href="https://www.linkedin.com/in/ferdiokts/"
+              class="icon brands fa-linkedin"
+              ><span class="label">Linkedin</span></a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.instagram.com/ferdiokts/"
+              class="icon brands fa-instagram"
+              ><span class="label">Instagram</span></a
+            >
+          </li>
+          <li>
+            <a href="https://github.com/ferdiokt" class="icon brands fa-github"
+              ><span class="label">Github</span></a
+            >
+          </li>
+          <li>
+            <a href="#four" class="icon solid fa-envelope"
+              ><span class="label">Email</span></a
+            >
+          </li>
+        </ul>
+      </footer>
+    </section>
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+      <!-- Main -->
+      <div id="main">
+        <!-- One -->
+        <section id="three">
+          <div class="container">
+            <header class="major">
+              <h2>Stock Candlestick Chart with Bokeh</h2>
+              <p>Using Bokeh library to plot stock chart in candlestick style.<br /></p>
+            </header>
+            {{plot_script | safe}}
+            {{plot_div | safe}}
+            <br>
+            <a href="./#three"><p>&#8592; Back to My Work</p></a>           
+          </div>
+          
+        </section>
+
+      <!-- Footer -->
+      <section id="footer">
+        <div class="container">
+          <ul class="copyright">
+            <li>&copy; ferdiokt. All rights reserved.</li>
+            <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+          </ul>
+        </div>
+      </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{{url_for('static', filename= 'assets/js/jquery.min.js')}}"></script>
+    <script src="{{url_for('static', filename= 'assets/js/jquery.scrollex.min.js')}}"></script>
+    <script src="{{url_for('static', filename= 'assets/js/jquery.scrolly.min.js')}}"></script>
+    <script src="{{url_for('static', filename= 'assets/js/browser.min.js')}}"></script>
+    <script src="{{url_for('static', filename= 'assets/js/breakpoints.min.js')}}"></script>
+    <script src="{{url_for('static', filename= 'assets/js/util.js')}}"></script>
+    <script src="{{url_for('static', filename= 'assets/js/main.js')}}"></script>
+  </body>
+</html>
