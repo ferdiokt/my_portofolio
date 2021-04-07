@@ -1,59 +1,41 @@
-from flask import Flask, render_template
-import flask
+from flask import Flask, render_template, request
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://jajfghehqmvhty:d53d646f3ad54fbc4dbe08f1ee4e74390ba45b85f89a38718ae2fc4f4bafff88@ec2-23-22-191-232.compute-1.amazonaws.com:5432/d9k5j118537rok?sslmode=require'
+db = SQLAlchemy(app)
+
+
+class Data(db.Model):
+    __tablename__ = 'contact_database'
+    id = db.Column(db.Integer, primary_key= True)
+    name = db.Column(db.String(120))
+    email = db.Column(db.String(120))
+    subject = db.Column(db.String(200))
+    message = db.Column(db.String)
+    
+    def __init__(self, name, email, subject, message):
+        self.name = name
+        self.email = email
+        self.subject = subject
+        self.message = message
+
 
 @app.route('/')
-@app.route('/index')
+@app.route('/index', methods= ['POST'])
 def index():
-    return render_template('index.html')
-
-@app.route('/plot')
-def plot():
-    from pandas_datareader import data
-    import datetime
-    from bokeh.plotting import figure, show, output_file
-    from bokeh.embed import components
-    from bokeh.resources import CDN
-
-    start_date= datetime.datetime(2015, 11, 1)
-    end_date= datetime.datetime(2016, 3, 10)
-    stock_name= "GOOG"
-
-    df= data.DataReader(name= stock_name, data_source= "stooq", 
-                        start= start_date, end= end_date)
-
-    def bull_bear(c, o):
-        if c > o:
-            value= "Bullish"
-        elif c < o:
-            value= "Bearish"
-        else:
-            value= "Equal"
-        return value
-
-    df["Status"]= [bull_bear(c, o) for c, o in zip(df.Close, df.Open)]
-    df["Median"]= (df.Open + df.Close)/2
-    df["Height"]= abs(df.Open - df.Close)
-
-    plot= figure(x_axis_type= "datetime", width= 1000, height= 300, sizing_mode= "scale_width")
-    plot.title.text= stock_name + " Daily Chart " + "(" + str(start_date) + "-" + str(end_date) + ")"
-    plot.grid.grid_line_alpha = 0
-
-    hours_12= 12*60*60*1000
-
-    plot.segment(df.index, df.High, df.index, df.Low, color= "Black")
-
-    plot.rect(df.index[df.Status == "Bullish"], df.Median[df.Status == "Bullish"], 
-            hours_12, df.Height[df.Status == "Bullish"], fill_color= "green", line_color= "black")
-    plot.rect(df.index[df.Status == "Bearish"], df.Median[df.Status == "Bearish"], 
-            hours_12, df.Height[df.Status == "Bearish"], fill_color= "#FF3333", line_color= "black")
-
-    script1, div1 = components(plot)
-    cdn_js= CDN.js_files
+    if request.method == 'POST':
+        req_name = request.form['name']
+        req_email = request.form['email']
+        req_subject = request.form['subject']
+        req_message = request.form['message']
+        
+        data = Data(req_name, req_email, req_subject, req_message)
+        db.session.add(data)
+        db.session.commit()            
+        return render_template('index.html', text= 'Success! I will contact you shortly!')
     
-    return render_template("plot.html", plot_script= script1,
-                           plot_div= div1, src_js= cdn_js[0])
+    return render_template('index.html')
 
 
 if (__name__) == ('__main__'):
