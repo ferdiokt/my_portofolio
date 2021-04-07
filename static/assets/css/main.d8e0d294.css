@@ -300,6 +300,13 @@ img {
   max-width: 100%;
   height: auto;
 }
+.img-static {
+  display: block;
+  float: left;
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
 .img-rounded {
   border-radius: 6px;
 }
